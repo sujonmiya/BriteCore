@@ -3,10 +3,10 @@
 ## Project details
 This is a vue-cli based project that houses a reusable data table component.
 
-##Data Table Component
+## Data Table Component
 DataTable is a highly reusable Vue.js component that can be used where a dynamic data table is required.
 
-##Features
+## Features
     - Client side filtering through any properties
     - Sorting (Ascending, Descending)
     - Server side search by any property 
@@ -14,7 +14,10 @@ DataTable is a highly reusable Vue.js component that can be used where a dynamic
     - Inline editing
     - Multiple/Individual Row(s) deleting 
     
-##Usage
+## Demo
+https://britecore-a6095.firebaseapp.com
+    
+## Usage
 ```html
         <DataTable title="BriteCore Data table"
                    :list="transactions"
