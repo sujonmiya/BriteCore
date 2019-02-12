@@ -1,0 +1,24 @@
+{
+  "first_name": "Sujon",
+  "last_name": "Al Mahmud",
+  "title": "Full-stack Software Developer",
+  "email": "sujoncxx@gmail.com",
+  "phone": "+8801783436273",
+  "country": "Bangladesh",
+  "city": "Dhaka",
+  "hobbies": [
+    "Reading books",
+    "Listening to music",
+    "Watching movies",
+    "Travelling"
+  ],
+  "years_of_experience": "7+",
+  "preferred_programming_languages": [
+    "JavaScript",
+    "Golang",
+    "Java",
+    "C++"
+  ],
+  "linked_in": "https://www.linkedin.com/in/simon-guillen",
+  "github": "https://github.com/sprguillen"
+}
