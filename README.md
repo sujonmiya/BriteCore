@@ -88,6 +88,13 @@ This project requires [Node.js](https://nodejs.org/) & [Yarn](https://yarnpkg.co
 yarn install
 ```
 
+### Imports transaction data from CSV file
+`FILE` should be the absolute path to your Firebase service account credential file
+
+```
+yarn run import --path=<FILE>
+```
+
 ### Compiles and hot-reloads for development
 ```
 yarn run serve
@@ -127,13 +134,13 @@ To deploy the app follow the bellow steps:
 3. Setup API keys etc
 - `update VUE_APP_API_KEY & VUE_APP_PROJECT_ID from Firebase in the .env file`
 ```.env
-VUE_APP_API_KEY=YOUR_API_KEY
+VUE_APP_API_KEY=<YOUR_API_KEY>
 VUE_APP_AUTH_DOMAIN=<YOUR_PROJECT_ID>.firebaseapp.com
 VUE_APP_DATABASE_URL=https://<YOUR_PROJECT_ID>.firebaseio.com
-VUE_APP_PROJECT_ID=YOUR_PROJECT_ID
+VUE_APP_PROJECT_ID=<YOUR_PROJECT_ID>
 ```
 
-4. Deploy the app
+4. Deploy the app (make sure to build the app before deploying)
 - `firebase deploy`
 
 ### Questions
