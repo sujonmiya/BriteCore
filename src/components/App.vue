@@ -2,7 +2,6 @@
     <div id="app">
         <HelloWorld msg="Welcome to BriteCore" />
 
-        <!--BriteCore transaction -->
         <DataTable title="Data table"
                    :list="transactions"
                    :entries-per-page="rowsPerPage"
@@ -50,7 +49,6 @@
 
         computed: {
             ...mapState(['transactions']),
-            //...mapGetters(['columns']),
             editables() {
                 return [{field: 'description', type: 'textarea'}];
             },
@@ -63,17 +61,11 @@
         methods: {
             onSearch({field, query, total}) {
                 this.isLoading = true;
-                console.log(`field:`, field);
-                console.log(`query:`, query);
-                console.log(`total:`, total);
 
                 this.$store.dispatch('searchTransactions', {field, query, total})
                     .then(transactions => {
                         this.isLoading = false;
-                        console.log('found query transactions', transactions);
                         transactions.forEach(tx => {
-                            //console.log(typeof tx);
-                            //console.log(tx);
                             this.$store.commit('addTransaction', tx)
                         });
 
@@ -91,19 +83,14 @@
             },
 
             onUpdate({model, field, value}) {
-                console.log(`model:`, model);
-                console.log(`field:`, field);
-                console.log(`value:`, value);
-
                 this.isLoading = true;
                 this.$store.dispatch('updateTransaction', {tx: model, field})
                     .then(result => {
                         this.isLoading = false;
-                        console.log('result updateTransaction', result);
                         this.$store.commit('updateTransaction', {tx: model, field});
                     })
                     .catch(err => {
-                        console.log('found err', err);
+                        console.log({err});
                         this.isLoading = false;
                         this.$store.dispatch('addError', err.message);
                     });
@@ -119,11 +106,10 @@
                         this.$store.dispatch('deleteTransaction', tx)
                             .then(result => {
                                 this.isLoading = false;
-                                console.log('result deleteTransaction', result);
                                 this.$store.commit('deleteTransaction', tx);
                             })
                             .catch(err => {
-                                console.log('found err', err);
+                                console.log({err});
                                 this.isLoading = false;
                                 this.$store.dispatch('addError', err.message);
                             });
@@ -133,11 +119,10 @@
                         this.$store.dispatch('deleteTransactions', transactions)
                             .then(result => {
                                 this.isLoading = false;
-                                console.log('result deleteTransactions', result);
                                 this.$store.commit('deleteTransactions', transactions);
                             })
                             .catch(err => {
-                                console.log('found err', err);
+                                console.log({err});
                                 this.isLoading = false;
                                 this.$store.dispatch('addError', err.message);
                             });
@@ -148,11 +133,10 @@
                     this.$store.dispatch('deleteTransaction', tx)
                         .then(result => {
                             this.isLoading = false;
-                            console.log('result deleteTransaction', result);
                             this.$store.commit('deleteTransaction', tx);
                         })
                         .catch(err => {
-                            console.log('found err', err);
+                            console.log({err});
                             this.isLoading = false;
                             this.$store.dispatch('addError', err.message);
                         });
@@ -165,10 +149,7 @@
                 this.$store.dispatch('fetchTransactionsByCursor', payload)
                     .then(transactions => {
                         this.isLoading = false;
-                        console.log('found prev transactions', transactions);
                         transactions.forEach(tx => {
-                            //console.log(typeof tx);
-                            //console.log(tx);
                             this.$store.commit('addTransaction', tx)
                         });
 
@@ -176,7 +157,7 @@
                     })
                     .catch(err => {
                         this.isLoading = false;
-                        console.log('found err', err);
+                        console.log({err});
                         this.$store.dispatch('addError', err.message);
                     });
             },
@@ -187,10 +168,7 @@
                 this.$store.dispatch('fetchTransactionsByCursor', payload)
                     .then(transactions => {
                         this.isLoading = false;
-                        console.log('found next transactions', transactions);
                         transactions.forEach(tx => {
-                            //console.log(typeof tx);
-                            //console.log(tx);
                             this.$store.commit('addTransaction', tx)
                         });
 
@@ -198,7 +176,7 @@
                     })
                     .catch(err => {
                         this.isLoading = false;
-                        console.log('found err', err);
+                        console.log({err});
                         this.$store.dispatch('addError', err.message);
                     });
             }
@@ -209,10 +187,7 @@
             this.$store.dispatch('fetchTransactions', {limit: this.rowsPerPage})
                 .then(transactions => {
                     this.isLoading = false;
-                    console.log('found transactions', transactions);
                     transactions.forEach(tx => {
-                        //console.log(typeof tx);
-                        console.log(tx);
                         this.$store.commit('addTransaction', tx)
                     });
 
@@ -220,7 +195,7 @@
                 })
                 .catch(err => {
                     this.isLoading = false;
-                    console.log('found err', err);
+                    console.log({err});
                     this.$store.dispatch('addError', err.message);
                 });
         }
@@ -228,12 +203,4 @@
 </script>
 
 <style lang="scss">
-    #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-        margin-top: 60px;
-    }
 </style>
