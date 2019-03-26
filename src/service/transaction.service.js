@@ -24,8 +24,6 @@ class TransactionService {
     }
 
     addTransaction(t) {
-        /*return this._collection.doc(t.id)
-            .set(Object.assign({}, t));*/
         return this._collection.add(Object.assign({}, t));
     }
 

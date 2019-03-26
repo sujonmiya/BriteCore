@@ -17,7 +17,6 @@ const mutations = {
     },
 
     addTransaction(state, transaction) {
-        //console.log('addTransaction', transaction);
         state.transactions.push(transaction);
     },
 
@@ -39,7 +38,6 @@ const mutations = {
     },
 
     deleteTransaction(state, transaction) {
-        // state.prev = doc;
         const idx = findIndex(state.transactions, tx => {
             return tx.id === transaction.id;
         });
@@ -49,7 +47,6 @@ const mutations = {
     },
 
     deleteTransactions(state, transactions) {
-        // state.prev = doc;
         transactions.forEach(txn => {
             const idx = findIndex(state.transactions, tx => {
                 return tx.id === txn.id;

@@ -23,7 +23,6 @@ const actions = {
                 commit('addTransaction', tx);
             })
             .catch(err => {
-                console.error(err);
                 commit('addError', err);
             });
     },
@@ -31,7 +30,6 @@ const actions = {
     searchTransactions({commit}, {field, query, total}) {
         return ts.searchTransactions(field, query, total)
             .then(snapshot => {
-                console.log('searchTransactions', snapshot);
                 commit('clearTransactions');
 
                 if (snapshot.empty)
@@ -47,8 +45,12 @@ const actions = {
                     data.doc = doc.id;
                     return data;
                 }).map(data => {
-                    // const date = moment(data.date.toDate()).format('YYYY-MM-DD HH:mm Z');
-                    return new Transaction(data.doc, data.id, data.customer, data.description, data.date.toDate(), data.amount);
+                    return new Transaction(data.doc,
+                        data.id,
+                        data.customer,
+                        data.description,
+                        data.date.toDate(),
+                        data.amount);
                 });
             });
     },
@@ -57,8 +59,6 @@ const actions = {
 
         return ts.findTransactions(limit)
             .then(snapshot => {
-                // console.log(typeof snapshot);
-                console.log(snapshot);
                 commit('clearTransactions');
 
                 if (snapshot.empty)
@@ -74,24 +74,20 @@ const actions = {
                     data.doc = doc.id;
                     return data;
                 }).map(data => {
-                    // const date = moment(data.date.toDate()).format('YYYY-MM-DD HH:mm Z');
-                    // console.log(data.date.toDate());
-                    return new Transaction(data.doc, data.id, data.customer, data.description, data.date.toDate(), data.amount);
+                    return new Transaction(data.doc,
+                        data.id,
+                        data.customer,
+                        data.description,
+                        data.date.toDate(),
+                        data.amount);
                 });
             });
     },
 
     fetchTransactionsByCursor({state, commit}, {limit, cursor}) {
-        //commit('clearTransactions');
-
-        console.log(limit);
-        console.log(cursor);
 
         return ts.findTransactionsByCursor(cursor === 'next' ? state.next : state.prev, limit)
             .then(snapshot => {
-                //console.log(typeof snapshot);
-                //console.log(snapshot);
-
                 if (snapshot.empty)
                     return snapshot.docs;
 
@@ -103,24 +99,25 @@ const actions = {
                 return snapshot.docs.map(doc => {
                     return doc.data();
                 }).map(data => {
-                    // const date = moment(data.date.toDate()).format('YYYY-MM-DD HH:mm Z');
-                    return new Transaction(data.doc, data.id, data.customer, data.description, data.date.toDate(), data.amount);
+                    return new Transaction(data.doc,
+                        data.id,
+                        data.customer,
+                        data.description,
+                        data.date.toDate(),
+                        data.amount);
                 });
             });
     },
 
     updateTransaction({commit}, {tx, field}) {
-        console.log('updateTransaction');
         return ts.updateTransaction(tx, field);
     },
 
     deleteTransaction({commit}, tx) {
-        console.log('deleteTransaction', tx);
         return ts.deleteTransaction(tx);
     },
 
     deleteTransactions({commit}, txs) {
-        console.log('deleteTransactions', txs);
         return ts.deleteTransactions(txs);
     },
 };

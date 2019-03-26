@@ -1,8 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
-// console.log(process.env);
-
 const config = {
     apiKey: process.env.VUE_APP_API_KEY,
     authDomain: process.env.VUE_APP_AUTH_DOMAIN,
@@ -14,7 +12,6 @@ class FirestoreService {
     _db;
 
     constructor() {
-        // console.log(config);
         firebase.initializeApp(config);
 
         const db = firebase.firestore();

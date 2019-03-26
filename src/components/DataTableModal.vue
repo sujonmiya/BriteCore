@@ -76,13 +76,8 @@
         },
 
         mounted() {
-            //this.$refs.modal.showModal();
             const modal = this.$refs.modal;
-            // console.log(modal);
             dialogPolyfill.registerDialog(modal);
-        },
-
-        created() {
         }
     }
 </script>

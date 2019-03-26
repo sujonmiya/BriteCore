@@ -90,10 +90,6 @@
         },
 
         computed: {
-            /*currentPage() {
-                return 1;
-            },*/
-
             totalPage() {
                 if (this.total < this.perPage)
                     return 1;
@@ -109,8 +105,6 @@
         methods: {
 
             onRowsPerPageChange() {
-                // this.currentPage = 1;
-                //
                 this.$emit('change', this.perPage);
             },
 
@@ -128,11 +122,7 @@
         },
 
         created() {
-            // console.log(this.limit);
-            // console.log(this.perPage);
-
             this.perPage = this.limit;
-            // console.log(this.perPage);
         }
     }
 </script>

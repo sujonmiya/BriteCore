@@ -94,7 +94,6 @@
 
         methods: {
             onEdit() {
-                //this.$emit('input', $ev.target.value);
                 this.isEditing = true;
             },
 
@@ -120,15 +119,6 @@
 
         mounted() {
             this.value_ = this.value;
-        },
-
-        created() {
-            // console.log('created');
-        },
-
-        beforeDestroy() {
-            // this.value_ = '';
-            // console.log('destroying');
         }
     }
 </script>

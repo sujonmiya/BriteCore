@@ -103,7 +103,6 @@
             },
 
             onEdit(field, $event) {
-                // console.log('selected', this.selected);
                 this.$emit('update', {model: this.model, field: camelCase(field), value: $event});
             },
 
@@ -112,9 +111,6 @@
             },
 
             isEditable(field) {
-                // console.log('field', field);
-                // console.log('editables', this.editables);
-
                 const found = this.editables.filter(e => {
                     return e.field === field;
                 });

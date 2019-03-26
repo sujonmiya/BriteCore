@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve --mode development",
     "build": "vue-cli-service build",
     "quiz": "node ./quiz.js",
-    "import": "node ./src/store/importer.js",
+    "import": "node ./src/service/importer.js",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
