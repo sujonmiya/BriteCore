@@ -5,8 +5,8 @@
                 <h3 style="margin-right: 16px">{{title}}</h3>
 
                 <button class="layout--button button--transparent"
-                            style="margin-right: 16px"
-                            @click="onAdd">
+                        style="margin-right: 16px"
+                        @click="onAdd">
                     <div class="layout--row row--flex row--flex__centerh">
                         <i class="material-icons" style="margin-right: 8px">
                             add
@@ -16,7 +16,7 @@
                 </button>
                 <button class="layout--button button--transparent"
                         :disabled="!hasSelected"
-                    @click="onDeletes">
+                        @click="onDeletes">
                     <div class="layout--row row--flex row--flex__centerh">
                         <i class="material-icons" style="margin-right: 8px">
                             delete_outline
@@ -28,8 +28,8 @@
 
             <DataTableSearch :filters="fields"
                              @search="onSearch"
-                            @change="onFilterChange"
-                            @filter="onFilter"/>
+                             @change="onFilterChange"
+                             @filter="onFilter"/>
         </div>
 
         <DataTableHeader :fields="fields"
@@ -41,14 +41,14 @@
                            :key="idx"
                            :id="row.id"
                            ref="rows"
-                            :model="row"
+                           :model="row"
                            :fields="fields"
-                          :editables="editables"
-                          :excludes="excludes"
-                          @select="onSelect"
-                          @deselect="onDeselect"
-                          @update="onUpdate"
-                          @delete="onDelete" />
+                           :editables="editables"
+                           :excludes="excludes"
+                           @select="onSelect"
+                           @deselect="onDeselect"
+                           @update="onUpdate"
+                           @delete="onDelete" />
 
             <p v-if="rows.length === 0">No {{schema|lowercase|pluralize}} found</p>
 
@@ -62,8 +62,8 @@
                          :limit="perPage"
                          :schema="schema"
                          @change="onRowsPerPageChange"
-                        @prev="onPrevious"
-                        @next="onNext" />
+                         @prev="onPrevious"
+                         @next="onNext" />
 
         <DataTableModal title="Delete?"
                         @ok="onOk"
@@ -161,8 +161,8 @@
                     cols = this.list[0];
 
                 return cols.filter(field => {
-                        return !this.isExclude(field);
-                    });
+                    return !this.isExclude(field);
+                });
             },
 
             totalPage() {
@@ -182,8 +182,7 @@
                 if (this.startAt === 0)
                     return this.perPage -1;
 
-                const end = this.startAt + this.perPage;
-                return end;
+                return this.startAt + this.perPage;
             },
 
             total_() {
@@ -198,13 +197,10 @@
                 let result = this.list.slice(this.startAt, this.endAt);
 
                 if (this.sortBy !== '' &&
-                    this.direction !== '')
+                    this.direction !== '') {
+                    const mod = this.direction === 'desc' ? 1 : -1;
+
                     return result.sort((a, b) => {
-                        let mod = 1;
-
-                        if (this.direction === 'desc')
-                            mod = -1;
-
                         if (a[this.sortBy] < b[this.sortBy])
                             return -1 * mod;
 
@@ -213,13 +209,11 @@
 
                         return 0;
                     });
+                }
                 else if (this.search !== '') {
                     return result.filter(row => {
                         if (this.filter !== '') {
-                            // console.log('filter', this.filter);
                             const val = row[this.filter];
-                            // console.log('val', typeof val);
-                            // console.log('date', is_date(val));
 
                             if (typeof val === 'string')
                                 return val.toLowerCase().includes(this.search.toLowerCase());
@@ -227,7 +221,6 @@
                                 return val >= this.search;
                             else if (is_date(val)) {
                                 const date = parse(this.search);
-                                // console.log('date', date);
                                 return is_after(val, date);
                             }
 
@@ -273,12 +266,10 @@
             onFilterChange(filter) {
                 this.filter = filter;
                 this.$emit('filter', filter);
-                // this.search = '';
             },
 
 
             onFilter(query) {
-                // this.$emit('filter', filter);
                 this.search = query;
             },
 
@@ -290,8 +281,7 @@
             onSort({field, direction}) {
                 if (this.sortBy === field &&
                     ((direction && this.direction === 'asc') ||
-                    (!direction && this.direction === 'desc'))) {
-                    // this.isSorted = true;
+                        (!direction && this.direction === 'desc'))) {
                     return;
                 }
 
@@ -301,17 +291,10 @@
                     this.direction = 'asc';
                 else
                     this.direction = 'desc';
-
-                // console.log(`sorted by ${field}`, this.direction);
-
-                // this.isSorted = false;
             },
 
             onEdit(row, field, $ev) {
-                /*console.log('row', row);
-                console.log('field', field);
-                console.log('$ev', $ev);*/
-                row[field] = $ev;//row[field]
+                row[field] = $ev;
                 this.$emit('update', row, field);
             },
 
@@ -322,14 +305,10 @@
             },
 
             onOk() {
-                // this.delete
-
-                //handle onOk
                 if (this.selected.length > 0)
                     this.$emit('delete', this.selected);
 
                 this.$refs.rows.forEach(row => {
-                    // console.log('row', row);
                     const found = findIndex(this.selected, item => {
                         return item.id === row.id;
                     });
@@ -382,7 +361,6 @@
                 console.log('isSelected', isSelected);
                 this.selectAll = isSelected;
                 this.$refs.rows.forEach(row => {
-                    // console.log('row', row);
                     row.isSelected = isSelected;
                     row.onSelect();
                 });
@@ -397,8 +375,6 @@
             onPrevious(perPage) {
                 this.currentPage--;
 
-                // this.$emit('previous', perPage);
-
                 if (this.startAt < this.perPage)
                     this.startAt = 0;
                 else
@@ -406,13 +382,11 @@
             },
 
             onNext(perPage) {
-                // const perPage = Number(this.perPage);
                 this.currentPage++;
 
                 if (!this.isCached)
                     this.$emit('next', perPage);
 
-                // this.startAt = this.currentPage === 1 ? 0 : (this.perPage * (this.currentPage -1)) - 1;
                 this.startAt = this.currentPage === 1 ? 0 : (this.perPage * (this.currentPage -1)) - 1;
             }
         },
