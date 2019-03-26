@@ -194,13 +194,18 @@
             },
 
             rows() {
+
+                const query = this.search;
+                const isSearch = query !== '';
+                const isFilter = this.filter !== '';
+                const isSort = this.sortBy !== '' &&
+                                this.direction !== '';
                 let result = this.list.slice(this.startAt, this.endAt);
 
-                if (this.sortBy !== '' &&
-                    this.direction !== '') {
+                if (isSort) {
                     const mod = this.direction === 'desc' ? 1 : -1;
 
-                    return result.sort((a, b) => {
+                    result.sort((a, b) => {
                         if (a[this.sortBy] < b[this.sortBy])
                             return -1 * mod;
 
@@ -210,17 +215,18 @@
                         return 0;
                     });
                 }
-                else if (this.search !== '') {
-                    return result.filter(row => {
-                        if (this.filter !== '') {
+
+                if (isSearch) {
+                    result = result.filter(row => {
+                        if (isFilter) {
                             const val = row[this.filter];
 
                             if (typeof val === 'string')
-                                return val.toLowerCase().includes(this.search.toLowerCase());
+                                return val.toLowerCase().includes(query.toLowerCase());
                             else if (typeof val === 'number')
-                                return val >= this.search;
+                                return val >= query;
                             else if (is_date(val)) {
-                                const date = parse(this.search);
+                                const date = parse(query);
                                 return is_after(val, date);
                             }
 
@@ -230,9 +236,9 @@
                             const values1 = values(row);
                             const found = values1.filter(value => {
                                 if (typeof value === 'string')
-                                    return value.toLowerCase().includes(this.search.toLowerCase());
+                                    return value.toLowerCase().includes(query.toLowerCase());
                                 else if (typeof value === 'number')
-                                    return value >= this.search;
+                                    return value >= query;
 
                                 return false;
                             });
